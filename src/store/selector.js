@@ -1,3 +1,3 @@
 export default {
-  getTodos: state => state.todo.todos,
+  getTodos: state => state.todo.get('todos'),
 };

@@ -1,13 +1,13 @@
 import { handleActions } from 'redux-actions';
 import {
-  actionCreators as apiActionCreators,
   types as apiTypes,
 } from '../sagas/ApiBuider';
+import { List, Map } from 'immutable';
 
-const defaultState = {
-  todos: [],
+const defaultState = Map({
+  todos: List(),
   filterState: 'All',
-};
+});
 
 const types = {
   GET_TODOS: 'GET_TODOS',
@@ -65,14 +65,8 @@ export const actions = {
 
 export default handleActions(
   {
-    [typesMapping.GET_TODOS_SUCCESS]: (state, action) => ({
-      ...state,
-      todos: action.payload.data,
-    }),
-    [types.ADD_TODO]: (state, action) => ({
-      ...state,
-      todos: [...state.todos, action.payload.todo],
-    }),
+    [typesMapping.GET_TODOS_SUCCESS]: (state, action) => state.set('todos', action.payload.data),
+    [types.ADD_TODO]: (state, action) => state.get('todos').add(action.payload.todo),
   },
   defaultState
 );
